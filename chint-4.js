@@ -7,7 +7,11 @@ client.connectTCP("192.168.0.101", { port: 4001 })
         return client.readInputRegisters(0x0100, 2, { unitId: 5 });
     })
     .then(function (data) {
-        console.log("Active Power:", data.data.readInt32BE());
+        if (data && data.data) {
+            console.log("Active Power:", data.data.readInt32BE());
+        } else {
+            console.log("No data received from slave 5.");
+        }
         client.close();
     })
     .catch(function (e) {
